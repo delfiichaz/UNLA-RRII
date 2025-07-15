@@ -2,7 +2,7 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f0f2f5;
+    background-color: #FDF0F3; /* Rosa muy claro, casi blanco */
     color: #333;
     line-height: 1.6;
     overflow-x: auto; /* Permite scroll horizontal si el contenido es demasiado ancho */
@@ -11,20 +11,20 @@ body {
 .header-container {
     text-align: center;
     margin-bottom: 30px;
-    background-color: #fff;
+    background-color: #FFFFFF; /* Blanco puro */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 h1 {
-    color: #0056b3;
+    color: #A3667F; /* Rosa oscuro / Malva */
     margin-bottom: 5px;
     font-size: 2.5em;
 }
 
 h2 {
-    color: #007bff;
+    color: #C0879E; /* Rosa medio */
     font-size: 1.5em;
     font-weight: normal;
 }
@@ -35,7 +35,7 @@ h2 {
     gap: 25px;
     margin-bottom: 30px;
     flex-wrap: wrap;
-    background-color: #e9ecef;
+    background-color: #FFFFFF; /* Blanco puro */
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -56,24 +56,22 @@ h2 {
     border: 1px solid rgba(0,0,0,0.1);
 }
 
-.legend-aprobada { background-color: #c8e6c9; } /* Verde claro */
-.legend-disponible { background-color: #e0f7fa; } /* Azul cian muy claro */
-.legend-no-disponible { background-color: #ffcdd2; } /* Rojo claro */
+.legend-aprobada { background-color: #E6F2F5; } /* Azul muy claro (logrado) */
+.legend-disponible { background-color: #F2F9F5; } /* Verde agua muy pálido (disponible) */
+.legend-no-disponible { background-color: #FCE3E7; } /* Rosa pálido (no disponible) */
 
 
 #malla-container {
     display: flex;
-    /* Evita que los años se envuelvan y los mantiene en una línea */
     flex-wrap: nowrap;
     gap: 30px; /* Espacio entre los años */
     padding-bottom: 20px; /* Espacio para el scroll horizontal */
 }
 
 .year-group {
-    /* Define un ancho fijo para cada columna de año para que no se contraigan */
     min-width: 300px;
-    flex-shrink: 0; /* Evita que se encojan */
-    background-color: #fff;
+    flex-shrink: 0;
+    background-color: #FFFFFF; /* Blanco puro */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     padding: 20px;
@@ -81,18 +79,18 @@ h2 {
 
 .year-group h3 {
     text-align: center;
-    color: #0056b3;
+    color: #A3667F; /* Rosa oscuro / Malva */
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 1.8em;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid #F0DDE4; /* Rosa claro */
     padding-bottom: 10px;
 }
 
 .semestre-group {
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 1px dashed #e0e0e0;
+    border-bottom: 1px dashed #F0DDE4; /* Rosa claro */
 }
 
 .semestre-group:last-child {
@@ -103,15 +101,15 @@ h2 {
 
 .semestre-group h4 {
     text-align: center;
-    color: #666;
+    color: #8C7B8E; /* Gris rosado */
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 1.2em;
 }
 
 .materia {
-    background-color: #e0f7fa; /* Default: Disponible */
-    border: 1px solid #b2ebf2;
+    background-color: #F2F9F5; /* Default: Disponible (Verde agua muy pálido) */
+    border: 1px solid #DDEAE1;
     padding: 12px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -144,14 +142,14 @@ h2 {
 
 /* Clases de estado */
 .materia-aprobada {
-    background-color: #c8e6c9; /* Verde claro */
-    border-color: #4caf50;
+    background-color: #E6F2F5; /* Azul muy claro (logrado) */
+    border-color: #C7E0E8;
     cursor: pointer; /* Aún se puede deseleccionar */
 }
 
 .materia-no-disponible {
-    background-color: #ffcdd2; /* Rojo claro */
-    border-color: #ef9a9a;
+    background-color: #FCE3E7; /* Rosa pálido (no disponible) */
+    border-color: #F5B9C5;
     cursor: not-allowed;
     opacity: 0.6; /* Menos opaco para indicar que no está disponible */
 }
@@ -161,7 +159,7 @@ h2 {
     display: block;
     margin: 30px auto;
     padding: 12px 25px;
-    background-color: #dc3545; /* Rojo de Bootstrap */
+    background-color: #DB5276; /* Rosa rojizo */
     color: white;
     border: none;
     border-radius: 5px;
@@ -172,7 +170,7 @@ h2 {
 }
 
 #reset-button:hover {
-    background-color: #c82333;
+    background-color: #C24867;
 }
 
 /* Media Queries para responsividad */
