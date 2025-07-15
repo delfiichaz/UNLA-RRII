@@ -63,14 +63,14 @@ h2 {
 
 #malla-container {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap; /* Evita que los años se envuelvan y los mantiene en una línea horizontal */
     gap: 30px; /* Espacio entre los años */
-    padding-bottom: 20px; /* Espacio para el scroll horizontal */
+    padding-bottom: 20px; /* Espacio para el scroll horizontal si es necesario */
 }
 
 .year-group {
-    min-width: 300px;
-    flex-shrink: 0;
+    min-width: 300px; /* Ancho mínimo para cada columna de año */
+    flex-shrink: 0; /* Evita que las columnas de año se encojan */
     background-color: #FFFFFF; /* Blanco puro */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
