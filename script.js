@@ -1,34 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Verificar que materiasData exista y sea un array
+    // --- VERIFICACIÓN CRÍTICA: Asegurarse de que materiasData exista y sea un array ---
     if (typeof materiasData === 'undefined' || !Array.isArray(materiasData)) {
-        console.error("Error: materiasData no está definida o no es un array. Asegúrate de que data.js se cargue antes que script.js y que materiasData esté correctamente definida.");
-        alert("Lo sentimos, no se pudieron cargar los datos de las materias. Por favor, revisa la consola para más detalles.");
-        return; // Detener la ejecución si no hay datos
+        console.error("Error: La variable 'materiasData' no está definida o no es un array. Asegúrate de que el archivo 'data.js' esté correctamente cargado ANTES que 'script.js' en tu HTML, y que contenga la definición de 'materiasData'.");
+        alert("¡Ups! No se pudo cargar la malla curricular. Por favor, revisa la consola para más detalles (F12).");
+        return; // Detener la ejecución si los datos no están disponibles
     }
+    // ----------------------------------------------------------------------------------
 
     const mallaContainer = document.getElementById('malla-container');
     const resetButton = document.getElementById('reset-button');
 
     // Cargar el estado de las materias aprobadas desde localStorage
+    // Si no hay nada guardado, inicializa un Set vacío.
     let materiasAprobadas = new Set(JSON.parse(localStorage.getItem('materiasAprobadas')) || []);
 
     // Función para verificar si una materia tiene todos sus prerrequisitos aprobados
     function tienePrerrequisitosCompletos(materiaId) {
         const materia = materiasData.find(m => m.id === materiaId);
-        
-        // Si la materia no se encuentra en materiasData, no tiene prerrequisitos o su array de prerrequisitos está vacío
-        // (¡aquí era donde ocurría el error si 'materia' era undefined!)
+
+        // Si la materia no se encuentra en materiasData (ID incorrecto en un prerequisito de otra materia), 
+        // se considera que NO tiene prerrequisitos completos.
         if (!materia) {
-            console.warn(`Materia con ID "${materiaId}" no encontrada en materiasData.`);
-            return false; // Si la materia no existe, no puede tener prerrequisitos completos
+            console.warn(`[tienePrerrequisitosCompletos]: Materia con ID "${materiaId}" no encontrada en 'materiasData'. Esto puede indicar un ID de prerrequisito incorrecto en alguna otra materia.`);
+            return false; 
         }
-        
+
+        // Si la materia existe pero no tiene el array 'prerequisitos' o este está vacío, no tiene requisitos
         if (!materia.prerequisitos || materia.prerrequisitos.length === 0) {
             return true; // No tiene prerrequisitos, siempre disponible
         }
-        
+
         // Comprueba si CADA prerrequisito está en el conjunto de materias aprobadas
-        return materia.prerrequisitos.every(prereqId => materiasAprobadas.has(prereqId));
+        return materia.prerrequisitos.every(prereqId => {
+            if (!materiasData.find(m => m.id === prereqId)) {
+                console.warn(`[tienePrerrequisitosCompletos]: El prerrequisito con ID "${prereqId}" (de la materia "${materia.nombre}") no fue encontrado en 'materiasData'.`);
+                return false; // Si un prerrequisito referenciado no existe, no se puede cumplir
+            }
+            return materiasAprobadas.has(prereqId);
+        });
     }
 
     // Función principal para renderizar/actualizar la malla
@@ -70,13 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
             semestresOrdenados.forEach(semestre => {
                 const semestreGroupDiv = document.createElement('div');
                 semestreGroupDiv.classList.add('semestre-group');
-                
-                // Mostrar título de semestre solo si el año no es 0 (para los requisitos adicionales no tiene sentido)
+
+                // Mostrar título de semestre solo si el año no es 0
                 if (anio !== '0') {
                     semestreGroupDiv.innerHTML = `<h4>Semestre ${semestre}</h4>`;
                 }
 
-                // Ordenar materias dentro de cada semestre por nombre (o por otro criterio si prefieres)
+                // Ordenar materias dentro de cada semestre por nombre
                 materiasPorAnio[anio][semestre].sort((a, b) => a.nombre.localeCompare(b.nombre)).forEach(materia => {
                     const materiaDiv = document.createElement('div');
                     materiaDiv.classList.add('materia');
@@ -108,10 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (isDisponible || isAprobada) {
                             manejarClicMateria(materia.id);
                         } else {
-                            // Opcional: alerta si intentan seleccionar una materia no disponible
-                            // alert('No puedes seleccionar esta materia. Primero debes aprobar sus prerrequisitos.');
-                            // Para no ser intrusivo, podemos solo hacer un console.log
-                            console.log(`Intento de seleccionar "${materia.nombre}" sin prerrequisitos completos.`);
+                            // Mensaje más discreto en consola en vez de alert
+                            console.log(`[Clic no permitido]: "${materia.nombre}" no puede ser seleccionada. Faltan prerrequisitos.`);
                         }
                     });
                 });
@@ -125,22 +132,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function manejarClicMateria(idMateria) {
         if (materiasAprobadas.has(idMateria)) {
             // Si la materia ya está aprobada, la desmarcamos.
-            // Consideración: Desmarcar una materia podría "desaprobar" otras que la tienen como prerrequisito.
-            // Este enfoque actual no desaprueba en cascada, solo la quita de la lista de 'aprobadas'.
-            // Si quieres lógica de cascada, sería más compleja. Por ahora, solo elimina.
             materiasAprobadas.delete(idMateria);
         } else {
             // Si no está aprobada y cumple sus prerrequisitos, la marcamos como aprobada.
             if (tienePrerrequisitosCompletos(idMateria)) {
                 materiasAprobadas.add(idMateria);
             } else {
-                // Esta parte del código no debería ejecutarse si el `if` del `addEventListener` funciona correctamente,
-                // pero se mantiene como una capa de seguridad.
-                alert('ERROR: Esta materia no puede ser aprobada, faltan prerrequisitos.');
+                // Esto no debería pasar si el addEventListener previene el clic, pero como seguridad
+                console.error(`[Error de Lógica]: Se intentó aprobar "${idMateria}" sin cumplir prerrequisitos.`);
                 return;
             }
         }
-        
+
         // Guardar el estado actualizado en localStorage para que persista
         localStorage.setItem('materiasAprobadas', JSON.stringify(Array.from(materiasAprobadas)));
         // Volver a renderizar la malla para actualizar los estados visuales de todas las materias
