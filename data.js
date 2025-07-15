@@ -1,375 +1,375 @@
 const materiasData = [
     // --- PRIMER AÑO ---
     {
-        id: 'h-moderna-contemporanea-i',
+        id: '1-1-historia-moderna-i',
         nombre: 'Historia Moderna y Contemporánea I',
         anio: 1,
         semestre: 1,
         prerequisitos: [],
-        correlativas: ['h-moderna-contemporanea-ii']
+        correlativas: ['1-2-historia-moderna-ii']
     },
     {
-        id: 'h-argentina-i',
+        id: '1-1-historia-argentina-i',
         nombre: 'Historia Argentina I',
         anio: 1,
         semestre: 1,
         prerequisitos: [],
-        correlativas: ['h-argentina-ii']
+        correlativas: ['1-2-historia-argentina-ii']
     },
     {
-        id: 'logica-epistemologia',
+        id: '1-1-logica-epistemologia',
         nombre: 'Lógica y Epistemología de las Ciencias Sociales',
         anio: 1,
         semestre: 1,
         prerequisitos: [],
-        correlativas: ['metodologia-investigacion']
+        correlativas: ['1-2-metodologia-investigacion']
     },
     {
-        id: 'intro-relaciones-internacionales',
+        id: '1-1-intro-relaciones-internacionales',
         nombre: 'Introducción a las Relaciones Internacionales',
         anio: 1,
         semestre: 1,
         prerequisitos: [],
-        correlativas: ['teoria-rr-ii-i'] // Ajustado a Teoria de RRII I
+        correlativas: ['2-3-teoria-rr-ii-i']
     },
     {
-        id: 'pensamiento-filosofico',
+        id: '1-1-pensamiento-filosofico',
         nombre: 'Pensamiento Filosófico',
         anio: 1,
         semestre: 1,
         prerequisitos: [],
-        correlativas: ['filosofia-moderna-contemporanea']
+        correlativas: ['1-2-filosofia-moderna']
     },
     {
-        id: 'h-moderna-contemporanea-ii',
+        id: '1-2-historia-moderna-ii',
         nombre: 'Historia Moderna y Contemporánea II',
         anio: 1,
         semestre: 2,
-        prerequisitos: ['h-moderna-contemporanea-i'],
-        correlativas: []
+        prerequisitos: ['1-1-historia-moderna-i'],
+        correlativas: ['2-4-historia-rr-ii-i']
     },
     {
-        id: 'h-argentina-ii',
+        id: '1-2-historia-argentina-ii',
         nombre: 'Historia Argentina II',
         anio: 1,
         semestre: 2,
-        prerequisitos: ['h-argentina-i'],
-        correlativas: []
+        prerequisitos: ['1-1-historia-argentina-i'],
+        correlativas: ['3-5-politica-exterior-argentina']
     },
     {
-        id: 'metodologia-investigacion',
+        id: '1-2-metodologia-investigacion',
         nombre: 'Metodología de la Investigación en Ciencias Sociales',
         anio: 1,
         semestre: 2,
-        prerequisitos: ['logica-epistemologia'],
-        correlativas: ['metodos-tecnicas-aplicados']
+        prerequisitos: ['1-1-logica-epistemologia'],
+        correlativas: ['2-3-metodos-tecnicas-aplicados']
     },
     {
-        id: 'filosofia-moderna-contemporanea',
+        id: '1-2-filosofia-moderna',
         nombre: 'Filosofía Moderna y Contemporánea',
         anio: 1,
         semestre: 2,
-        prerequisitos: ['pensamiento-filosofico'],
+        prerequisitos: ['1-1-pensamiento-filosofico'],
         correlativas: []
     },
     {
-        id: 'economia-politica-i',
+        id: '1-2-economia-politica-i',
         nombre: 'Economía Política I',
         anio: 1,
         semestre: 2,
         prerequisitos: [],
-        correlativas: ['economia-politica-ii']
+        correlativas: ['2-3-economia-politica-ii']
     },
 
     // --- SEGUNDO AÑO ---
     {
-        id: 'teoria-rr-ii-i',
+        id: '2-3-teoria-rr-ii-i',
         nombre: 'Teoría de las Relaciones Internacionales I',
         anio: 2,
         semestre: 3,
-        prerequisitos: ['intro-relaciones-internacionales'],
-        correlativas: ['teoria-rr-ii-ii'] // Ajustado a Teoria de RRII II
+        prerequisitos: ['1-1-intro-relaciones-internacionales'],
+        correlativas: ['2-4-teoria-rr-ii-ii']
     },
     {
-        id: 'economia-politica-ii',
+        id: '2-3-economia-politica-ii',
         nombre: 'Economía Política II',
         anio: 2,
         semestre: 3,
-        prerequisitos: ['economia-politica-i'],
-        correlativas: ['economia-politica-internacional-i']
+        prerequisitos: ['1-2-economia-politica-i'],
+        correlativas: ['2-4-economia-politica-internacional-i']
     },
     {
-        id: 'sistematica-ciencia-politica',
+        id: '2-3-sistematica-ciencia-politica',
         nombre: 'Sistemática de la Ciencia Política',
         anio: 2,
         semestre: 3,
-        prerequisitos: ['logica-epistemologia'], // Suponiendo
-        correlativas: ['teoria-politica-i']
+        prerequisitos: ['1-1-logica-epistemologia'],
+        correlativas: ['2-4-teoria-politica-i']
     },
     {
-        id: 'metodos-tecnicas-aplicados',
+        id: '2-3-metodos-tecnicas-aplicados',
         nombre: 'Métodos y Técnicas de Investigación Aplicados',
         anio: 2,
         semestre: 3,
-        prerequisitos: ['metodologia-investigacion'],
-        correlativas: ['disenio-modelos']
+        prerequisitos: ['1-2-metodologia-investigacion'],
+        correlativas: ['2-4-disenio-modelos']
     },
     {
-        id: 'politica-internacional-contemporanea',
+        id: '2-3-politica-internacional-contemporanea',
         nombre: 'Política Internacional Contemporánea',
         anio: 2,
         semestre: 3,
-        prerequisitos: ['intro-relaciones-internacionales'],
-        correlativas: ['agenda-internacional']
+        prerequisitos: ['1-1-intro-relaciones-internacionales'],
+        correlativas: ['3-6-agenda-internacional']
     },
     {
-        id: 'historia-rr-ii-perspectivas-i',
+        id: '2-4-historia-rr-ii-i',
         nombre: 'Historia de las Relaciones Internacionales y Perspectivas Analíticas I',
         anio: 2,
         semestre: 4,
-        prerequisitos: ['h-moderna-contemporanea-ii'], // Suponiendo
-        correlativas: ['historia-rr-latinoamericanas']
+        prerequisitos: ['1-2-historia-moderna-ii'],
+        correlativas: ['3-5-historia-rr-latinoamericanas', '3-5-historia-rr-ii']
     },
     {
-        id: 'teoria-politica-i',
+        id: '2-4-teoria-politica-i',
         nombre: 'Teoría Política I',
         anio: 2,
         semestre: 4,
-        prerequisitos: ['sistematica-ciencia-politica'],
-        correlativas: ['teoria-politica-ii']
+        prerequisitos: ['2-3-sistematica-ciencia-politica'],
+        correlativas: ['3-5-teoria-politica-ii']
     },
     {
-        id: 'economia-politica-internacional-i',
+        id: '2-4-economia-politica-internacional-i',
         nombre: 'Economía Política Internacional I',
         anio: 2,
         semestre: 4,
-        prerequisitos: ['economia-politica-ii'],
-        correlativas: ['economia-politica-internacional-ii']
+        prerequisitos: ['2-3-economia-politica-ii'],
+        correlativas: ['3-5-economia-politica-internacional-ii']
     },
     {
-        id: 'teoria-rr-ii-ii',
+        id: '2-4-teoria-rr-ii-ii',
         nombre: 'Teoría de las Relaciones Internacionales II',
         anio: 2,
         semestre: 4,
-        prerequisitos: ['teoria-rr-ii-i'],
-        correlativas: ['teoria-rr-ii-iii'] // Ajustado a Teoria de RRII III
+        prerequisitos: ['2-3-teoria-rr-ii-i'],
+        correlativas: ['3-6-instituciones-internacionales', '3-6-politica-internacional-ddhh', '3-6-teoria-rr-ii-iii']
     },
     {
-        id: 'disenio-modelos',
+        id: '2-4-disenio-modelos',
         nombre: 'Diseño y Formulación de Modelos Prospectivos y de Investigación',
         anio: 2,
         semestre: 4,
-        prerequisitos: ['metodos-tecnicas-aplicados'],
-        correlativas: ['seminario-tf-i']
+        prerequisitos: ['2-3-metodos-tecnicas-aplicados'],
+        correlativas: ['4-7-seminario-tf-i']
     },
 
     // --- TERCER AÑO ---
     {
-        id: 'economia-politica-internacional-ii',
+        id: '3-5-economia-politica-internacional-ii',
         nombre: 'Economía Política Internacional II',
         anio: 3,
         semestre: 5,
-        prerequisitos: ['economia-politica-internacional-i'],
-        correlativas: ['economia-politica-internacional-iii'] // Para mención
+        prerequisitos: ['2-4-economia-politica-internacional-i'],
+        correlativas: ['4-7-economia-politica-internacional-iii']
     },
     {
-        id: 'historia-rr-latinoamericanas',
+        id: '3-5-historia-rr-latinoamericanas',
         nombre: 'Historia de las Relaciones Internacionales Latinoamericanas',
         anio: 3,
         semestre: 5,
-        prerequisitos: ['historia-rr-ii-perspectivas-i'],
-        correlativas: ['procesos-integracion-americanos']
+        prerequisitos: ['2-4-historia-rr-ii-i'],
+        correlativas: ['4-7-procesos-integracion-americanos']
     },
     {
-        id: 'teoria-politica-ii',
+        id: '3-5-teoria-politica-ii',
         nombre: 'Teoría Política II',
         anio: 3,
         semestre: 5,
-        prerequisitos: ['teoria-politica-i'],
-        correlativas: ['sistemas-politicos-comparados']
+        prerequisitos: ['2-4-teoria-politica-i'],
+        correlativas: ['3-6-sistemas-politicos-comparados']
     },
     {
-        id: 'politica-exterior-argentina',
+        id: '3-5-politica-exterior-argentina',
         nombre: 'Política Exterior Argentina',
         anio: 3,
         semestre: 5,
-        prerequisitos: ['h-argentina-ii', 'intro-relaciones-internacionales'],
-        correlativas: []
+        prerequisitos: ['1-2-historia-argentina-ii', '1-1-intro-relaciones-internacionales'],
+        correlativas: ['4-8-politicas-exteriores-latam-comparadas']
     },
     {
-        id: 'historia-rr-perspectivas-analiticas-ii',
+        id: '3-5-historia-rr-ii',
         nombre: 'Historia de las Relaciones Internacionales y Perspectivas Analíticas II',
         anio: 3,
         semestre: 5,
-        prerequisitos: ['historia-rr-ii-perspectivas-i'],
+        prerequisitos: ['2-4-historia-rr-ii-i'],
         correlativas: []
     },
     {
-        id: 'instituciones-internacionales',
+        id: '3-6-instituciones-internacionales',
         nombre: 'Instituciones Internacionales',
         anio: 3,
         semestre: 6,
-        prerequisitos: ['teoria-rr-ii-ii'],
+        prerequisitos: ['2-4-teoria-rr-ii-ii'],
         correlativas: []
     },
     {
-        id: 'agenda-internacional',
+        id: '3-6-agenda-internacional',
         nombre: 'Agenda Internacional',
         anio: 3,
         semestre: 6,
-        prerequisitos: ['politica-internacional-contemporanea'],
+        prerequisitos: ['2-3-politica-internacional-contemporanea'],
         correlativas: []
     },
     {
-        id: 'sistemas-politicos-comparados',
+        id: '3-6-sistemas-politicos-comparados',
         nombre: 'Sistemas Políticos Comparados',
         anio: 3,
         semestre: 6,
-        prerequisitos: ['teoria-politica-ii'],
-        correlativas: ['sistemas-politicos-latinoamericanos-comparados'] // Para mención
+        prerequisitos: ['3-5-teoria-politica-ii'],
+        correlativas: ['4-7-sistemas-politicos-latam-comparados']
     },
     {
-        id: 'politica-internacional-derechos-humanos',
+        id: '3-6-politica-internacional-ddhh',
         nombre: 'Política Internacional y Derechos Humanos',
         anio: 3,
         semestre: 6,
-        prerequisitos: ['teoria-rr-ii-ii'],
+        prerequisitos: ['2-4-teoria-rr-ii-ii'],
         correlativas: []
     },
     {
-        id: 'teoria-rr-ii-iii',
+        id: '3-6-teoria-rr-ii-iii',
         nombre: 'Teoría de las Relaciones Internacionales III',
         anio: 3,
         semestre: 6,
-        prerequisitos: ['teoria-rr-ii-ii'],
+        prerequisitos: ['2-4-teoria-rr-ii-ii'],
         correlativas: []
     },
 
     // --- CUARTO AÑO ---
     {
-        id: 'procesos-integracion-americanos',
+        id: '4-7-procesos-integracion-americanos',
         nombre: 'Procesos de Integración Americanos',
         anio: 4,
         semestre: 7,
-        prerequisitos: ['historia-rr-latinoamericanas'],
-        correlativas: ['teoria-integracion', 'derecho-integracion'] // Para mención
+        prerequisitos: ['3-5-historia-rr-latinoamericanas'],
+        correlativas: ['4-7-teoria-integracion', '4-8-derecho-integracion']
     },
     {
-        id: 'seminario-tf-i',
+        id: '4-7-seminario-tf-i',
         nombre: 'Seminario de Elaboración de Trabajo Final I',
         anio: 4,
         semestre: 7,
-        prerequisitos: ['disenio-modelos'], // Por ser el último nivel de metodología
-        correlativas: ['seminario-tf-ii']
+        prerequisitos: ['2-4-disenio-modelos'],
+        correlativas: ['4-8-seminario-tf-ii']
     },
     // --- Mención en Asuntos Latinoamericanos ---
     {
-        id: 'sistemas-politicos-latinoamericanos-comparados',
+        id: '4-7-sistemas-politicos-latam-comparados',
         nombre: 'Sistemas Políticos Latinoamericanos Comparados (Mención)',
         anio: 4,
         semestre: 7,
-        prerequisitos: ['sistemas-politicos-comparados'],
-        correlativas: ['politicas-exteriores-latinoamericanas-comparadas'],
+        prerequisitos: ['3-6-sistemas-politicos-comparados'],
+        correlativas: ['4-8-politicas-exteriores-latam-comparadas'],
         mencion: 'Asuntos Latinoamericanos'
     },
     {
-        id: 'politicas-exteriores-latinoamericanas-comparadas',
+        id: '4-8-politicas-exteriores-latam-comparadas',
         nombre: 'Políticas Exteriores Latinoamericanas Comparadas (Mención)',
         anio: 4,
         semestre: 8,
-        prerequisitos: ['sistemas-politicos-latinoamericanos-comparados', 'politica-exterior-argentina'],
+        prerequisitos: ['4-7-sistemas-politicos-latam-comparados', '3-5-politica-exterior-argentina'],
         correlativas: [],
         mencion: 'Asuntos Latinoamericanos'
     },
     {
-        id: 'politica-domestica-externa-brasilena',
+        id: '4-8-politica-domestica-externa-brasilena',
         nombre: 'Política Doméstica y Externa Brasileña (Mención)',
         anio: 4,
         semestre: 8,
-        prerequisitos: ['procesos-integracion-americanos'], // Suponiendo
+        prerequisitos: ['4-7-procesos-integracion-americanos'],
         correlativas: [],
         mencion: 'Asuntos Latinoamericanos'
     },
     // --- Mención en Procesos de Integración y Relaciones Comerciales Internacionales ---
     {
-        id: 'teoria-integracion',
+        id: '4-7-teoria-integracion',
         nombre: 'Teoría de la Integración (Mención)',
         anio: 4,
         semestre: 7,
-        prerequisitos: ['procesos-integracion-americanos'],
-        correlativas: ['derecho-integracion'],
+        prerequisitos: ['4-7-procesos-integracion-americanos'],
+        correlativas: ['4-8-derecho-integracion'],
         mencion: 'Integración y Comercio'
     },
     {
-        id: 'economia-politica-internacional-iii',
+        id: '4-7-economia-politica-internacional-iii',
         nombre: 'Economía Política Internacional III (Mención)',
         anio: 4,
         semestre: 7,
-        prerequisitos: ['economia-politica-internacional-ii'],
+        prerequisitos: ['3-5-economia-politica-internacional-ii'],
         correlativas: [],
         mencion: 'Integración y Comercio'
     },
     {
-        id: 'derecho-integracion',
+        id: '4-8-derecho-integracion',
         nombre: 'Derecho de la Integración (Mención)',
         anio: 4,
         semestre: 8,
-        prerequisitos: ['teoria-integracion'],
+        prerequisitos: ['4-7-teoria-integracion'],
         correlativas: [],
         mencion: 'Integración y Comercio'
     },
 
     {
-        id: 'seminario-tf-ii',
+        id: '4-8-seminario-tf-ii',
         nombre: 'Seminario de Elaboración de Trabajo Final II',
         anio: 4,
         semestre: 8,
-        prerequisitos: ['seminario-tf-i'],
-        correlativas: ['trabajo-final']
+        prerequisitos: ['4-7-seminario-tf-i'],
+        correlativas: ['0-0-trabajo-final']
     },
     {
-        id: 'practica-pre-profesional',
+        id: '4-8-practica-pre-profesional',
         nombre: 'Práctica Pre-Profesional',
         anio: 4,
         semestre: 8,
-        prerequisitos: ['seminario-tf-i'], // Después de cierto avance en el seminario
+        prerequisitos: ['4-7-seminario-tf-i'],
         correlativas: []
     },
 
-    // --- REQUISITOS ADICIONALES ---
+    // --- REQUISITOS ADICIONALES Y FINALES (ANIO 0) ---
     {
-        id: 'idioma-ingles',
+        id: '0-0-idioma-ingles',
         nombre: 'Cinco Niveles de Idioma Inglés',
-        anio: 0, // 0 para requisitos transversales/extra-curriculares
+        anio: 0,
         semestre: 0,
         prerequisitos: [],
-        correlativas: ['trabajo-final'], // El trabajo final lo requiere
+        correlativas: ['0-0-trabajo-final'],
         tipo: 'requisito-adicional'
     },
     {
-        id: 'idioma-portugues',
+        id: '0-0-idioma-portugues',
         nombre: 'Tres Niveles de Idioma Portugués',
         anio: 0,
         semestre: 0,
         prerequisitos: [],
-        correlativas: ['trabajo-final'], // El trabajo final lo requiere
+        correlativas: ['0-0-trabajo-final'],
         tipo: 'requisito-adicional'
     },
     {
-        id: 'informatica',
+        id: '0-0-informatica',
         nombre: 'Tres Niveles de Informática',
         anio: 0,
         semestre: 0,
         prerequisitos: [],
-        correlativas: ['trabajo-final'], // El trabajo final lo requiere
+        correlativas: ['0-0-trabajo-final'],
         tipo: 'requisito-adicional'
     },
     {
-        id: 'trabajo-final',
+        id: '0-0-trabajo-final',
         nombre: 'Trabajo Final de Grado',
         anio: 0,
         semestre: 0,
-        prerequisitos: ['seminario-tf-ii', 'idioma-ingles', 'idioma-portugues', 'informatica'], // Asumo que todos estos son requisitos finales
+        prerequisitos: ['4-8-seminario-tf-ii', '0-0-idioma-ingles', '0-0-idioma-portugues', '0-0-informatica'],
         correlativas: [],
         tipo: 'requisito-adicional'
     }
