@@ -1,16 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
     const mallaContainer = document.getElementById('malla-container');
+    const resetButton = document.getElementById('reset-button');
 
-    // Función para renderizar las materias agrupadas por año
-    function renderMaterias() {
+    // Cargar el estado de las materias aprobadas desde localStorage
+    let materiasAprobadas = new Set(JSON.parse(localStorage.getItem('materiasAprobadas')) || []);
+
+    // Función para verificar si una materia tiene todos sus prerrequisitos aprobados
+    function tienePrerrequisitosCompletos(materiaId) {
+        const materia = materiasData.find(m => m.id === materiaId);
+        if (!materia || !materia.prerequisitos || materia.prerrequisitos.length === 0) {
+            return true; // No tiene prerrequisitos, siempre disponible
+        }
+        return materia.prerequisitos.every(prereqId => materiasAprobadas.has(prereqId));
+    }
+
+    // Función principal para renderizar/actualizar la malla
+    function renderMalla() {
         mallaContainer.innerHTML = ''; // Limpiar el contenedor antes de renderizar
 
-        // Agrupar materias por año
+        // Agrupar materias por año y luego por semestre
         const materiasPorAnio = materiasData.reduce((acc, materia) => {
             if (!acc[materia.anio]) {
-                acc[materia.anio] = [];
+                acc[materia.anio] = {};
             }
-            acc[materia.anio].push(materia);
+            if (!acc[materia.anio][materia.semestre]) {
+                acc[materia.anio][materia.semestre] = [];
+            }
+            acc[materia.anio][materia.semestre].push(materia);
             return acc;
         }, {});
 
@@ -18,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const aniosOrdenados = Object.keys(materiasPorAnio).sort((a, b) => {
             if (a === '0') return 1; // Mueve el año 0 al final
             if (b === '0') return -1;
-            return a - b;
+            return parseInt(a) - parseInt(b);
         });
 
         aniosOrdenados.forEach(anio => {
@@ -31,85 +47,84 @@ document.addEventListener('DOMContentLoaded', () => {
                 yearGroupDiv.innerHTML = `<h3>Año ${anio}</h3>`;
             }
 
-            // Ordenar materias dentro de cada año por semestre
-            materiasPorAnio[anio].sort((a, b) => a.semestre - b.semestre).forEach(materia => {
-                const materiaDiv = document.createElement('div');
-                materiaDiv.classList.add('materia');
-                materiaDiv.setAttribute('data-id', materia.id); // Usamos un data-id para identificarla
+            const semestresOrdenados = Object.keys(materiasPorAnio[anio]).sort((a, b) => parseInt(a) - parseInt(b));
+
+            semestresOrdenados.forEach(semestre => {
+                const semestreGroupDiv = document.createElement('div');
+                semestreGroupDiv.classList.add('semestre-group');
                 
-                // Mostrar los prerrequisitos en el texto de la materia
-                let prereqText = '';
-                if (materia.prerequisitos && materia.prerequisitos.length > 0) {
-                    const prereqNombres = materia.prerequisitos
-                        .map(pId => materiasData.find(m => m.id === pId)?.nombre || pId)
-                        .join(', ');
-                    prereqText = `<p>Prerrequisitos: ${prereqNombres}</p>`;
+                // Mostrar título de semestre solo si el año no es 0
+                if (anio !== '0') {
+                    semestreGroupDiv.innerHTML = `<h4>Semestre ${semestre}</h4>`;
                 }
 
-                // Mostrar las correlativas en el texto de la materia
-                let correlativasText = '';
-                if (materia.correlativas && materia.correlativas.length > 0) {
-                    const correlativasNombres = materia.correlativas
-                        .map(cId => materiasData.find(m => m.id === cId)?.nombre || cId)
-                        .join(', ');
-                    correlativasText = `<p>Correlativas: ${correlativasNombres}</p>`;
-                }
+                // Ordenar materias por ID o algún otro criterio si es necesario
+                materiasPorAnio[anio][semestre].sort((a, b) => a.nombre.localeCompare(b.nombre)).forEach(materia => {
+                    const materiaDiv = document.createElement('div');
+                    materiaDiv.classList.add('materia');
+                    materiaDiv.setAttribute('data-id', materia.id);
 
-                materiaDiv.innerHTML = `
-                    <h4>${materia.nombre}</h4>
-                    ${materia.semestre && anio !== '0' ? `<p>Semestre: ${materia.semestre}</p>` : ''}
-                    ${materia.mencion ? `<p>Mención: ${materia.mencion}</p>` : ''}
-                    ${prereqText}
-                    ${correlativasText}
-                `;
-                yearGroupDiv.appendChild(materiaDiv);
+                    // Determinar estado de la materia
+                    let isAprobada = materiasAprobadas.has(materia.id);
+                    let isDisponible = hasPrerrequisitosCompletos(materia.id);
 
-                // Añadir evento de clic
-                materiaDiv.addEventListener('click', () => {
-                    manejarClicMateria(materia.id);
+                    if (isAprobada) {
+                        materiaDiv.classList.add('materia-aprobada');
+                    } else if (isDisponible) {
+                        materiaDiv.classList.add('materia-disponible'); // Nueva clase para disponible
+                    } else {
+                        materiaDiv.classList.add('materia-no-disponible');
+                    }
+
+                    materiaDiv.innerHTML = `
+                        <h5>${materia.nombre}</h5>
+                        ${materia.mencion ? `<p>Mención: ${materia.mencion}</p>` : ''}
+                    `;
+                    semestreGroupDiv.appendChild(materiaDiv);
+
+                    // Añadir evento de clic
+                    materiaDiv.addEventListener('click', () => {
+                        // Solo permitir clic si no es "no disponible" o si ya está aprobada (para deseleccionar)
+                        if (isDisponible || isAprobada) {
+                            manejarClicMateria(materia.id);
+                        }
+                    });
                 });
+                yearGroupDiv.appendChild(semestreGroupDiv);
             });
             mallaContainer.appendChild(yearGroupDiv);
         });
     }
 
-    // Función para manejar el clic en una materia
+    // Función para manejar el clic en una materia (aprobar/desaprobar)
     function manejarClicMateria(idMateria) {
-        // Limpiar resaltados anteriores
-        document.querySelectorAll('.materia').forEach(el => {
-            el.classList.remove('selected-materia', 'prerequisite-of-selected', 'correlative-of-selected');
-        });
-
-        const materiaSeleccionadaDiv = document.querySelector(`.materia[data-id="${idMateria}"]`);
-        if (materiaSeleccionadaDiv) {
-            materiaSeleccionadaDiv.classList.add('selected-materia'); // Resaltar la materia clicada
-
-            const materiaObj = materiasData.find(m => m.id === idMateria);
-
-            if (materiaObj) {
-                // Resaltar prerrequisitos de la materia seleccionada
-                if (materiaObj.prerequisitos && materiaObj.prerequisitos.length > 0) {
-                    materiaObj.prerequisitos.forEach(prereqId => {
-                        const prereqDiv = document.querySelector(`.materia[data-id="${prereqId}"]`);
-                        if (prereqDiv) {
-                            prereqDiv.classList.add('prerequisite-of-selected');
-                        }
-                    });
-                }
-
-                // Resaltar correlativas (materias que requieren la seleccionada como prerrequisito)
-                materiasData.forEach(m => {
-                    if (m.prerequisitos && m.prerequisitos.includes(idMateria)) {
-                        const correlativaDiv = document.querySelector(`.materia[data-id="${m.id}"]`);
-                        if (correlativaDiv) {
-                            correlativaDiv.classList.add('correlative-of-selected');
-                        }
-                    }
-                });
+        if (materiasAprobadas.has(idMateria)) {
+            // Si ya está aprobada, la desmarcamos
+            materiasAprobadas.delete(idMateria);
+        } else {
+            // Si no está aprobada y cumple los prerrequisitos, la marcamos
+            if (tienePrerrequisitosCompletos(idMateria)) {
+                materiasAprobadas.add(idMateria);
+            } else {
+                alert('No puedes aprobar esta materia porque no cumples con todos sus prerrequisitos.');
+                return; // No hacer nada si no cumple prerrequisitos
             }
         }
+        
+        // Guardar el estado actualizado y volver a renderizar
+        localStorage.setItem('materiasAprobadas', JSON.stringify(Array.from(materiasAprobadas)));
+        renderMalla();
     }
 
-    // Renderizar las materias al cargar la página
-    renderMaterias();
+    // Manejador para el botón de reiniciar
+    resetButton.addEventListener('click', () => {
+        if (confirm('¿Estás seguro de que quieres reiniciar tu progreso? Se borrarán todas las materias aprobadas.')) {
+            materiasAprobadas.clear();
+            localStorage.removeItem('materiasAprobadas');
+            renderMalla();
+        }
+    });
+
+    // Renderizar la malla al cargar la página por primera vez
+    renderMalla();
 });
