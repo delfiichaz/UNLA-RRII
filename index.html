@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malla Curricular: Relaciones Internacionales - UNLa</title>
+    <title>Malla Curricular Interactiva: Relaciones Internacionales - UNLa</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,13 +13,15 @@
     </div>
 
     <div class="legend-container">
-        <div class="legend-item"><span class="legend-color legend-current"></span> Materia Seleccionada</div>
-        <div class="legend-item"><span class="legend-color legend-prereq"></span> Prerrequisito (Necesaria para la seleccionada)</div>
-        <div class="legend-item"><span class="legend-color legend-correlative"></span> Correlativa (Requiere la seleccionada)</div>
+        <div class="legend-item"><span class="legend-color legend-aprobada"></span> Materia Aprobada</div>
+        <div class="legend-item"><span class="legend-color legend-disponible"></span> Disponible para Cursar</div>
+        <div class="legend-item"><span class="legend-color legend-no-disponible"></span> No Disponible (Faltan Prerrequisitos)</div>
     </div>
 
     <div id="malla-container">
         </div>
+
+    <button id="reset-button">Reiniciar Selección</button>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
